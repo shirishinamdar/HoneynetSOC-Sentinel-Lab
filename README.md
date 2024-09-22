@@ -1,35 +1,73 @@
-Developed custom Azure Sentinel SIEM content and data visualizations to extract geographic insights from 2000+ RDP brute forcealerts enabling global attack pattern analysis.
-**VM Creation:**
+# Azure Sentinel Honeypot: Mapping Live Cyber Attacks
 
-Using Azure portal, provision a Windows 10 VM in West US region with inbound port 3389 open for Remote Desktop Protocol (RDP) access.
-Configure networking settings to allow all traffic to the VM.
+## Overview
 
-**Logging Setup:**
-Set up Log Analytics Workspace to ingest logs from the VM, particularly focusing on Windows event logs.
-Integrate Azure Sentinel with the Log Analytics Workspace to enable advanced security analytics.
+This project demonstrates how to set up an Azure honeypot virtual machine and configure Azure Sentinel to visualize and analyze live cyber attacks from around the world. By creating an intentionally vulnerable system, we gain valuable insights into the tactics, techniques, and procedures (TTPs) used by attackers, enabling us to enhance our security posture and incident response capabilities proactively.
 
-**Logging Enablement:**
-Within Microsoft Defender for the Cloud (formerly Security Center), ensure that logging from the VM is enabled and configured to send logs to the Log Analytics Workspace.
+## Key Features
 
-**VM Access:**
+- Real-time monitoring of global cyber attacks
+- Geolocation data for attack sources
+- Custom log ingestion for failed login attempts
+- Azure Sentinel integration for advanced threat analytics
+- Visualizations of attack patterns and sources
 
-Connect to the VM using RDP and disable Windows Defender to prevent interference with logging and analysis.
-IP Geolocation Integration:
-Acquire an API key from ipgeolocation.io to access IP geolocation data.
-Incorporate this API key into a provided PowerShell script, which will be used to extract IP geolocation information from the incoming logs.
+## Setup Instructions
 
-**Custom Logging Script:**
-Utilize a provided PowerShell script, tailored for exporting failed login attempts from Windows event logs.
-This script parses the event logs, captures relevant data (like IP addresses), and exports it for further analysis.
+1. **Create a Virtual Machine**
+   - Use a Windows 10 image
+   - Open inbound port 3389 (RDP) for remote access
 
-**Custom Log Configuration:**
-Configure Log Analytics Workspace to accommodate custom logs.
-Define the structure of the custom log to store data extracted by the PowerShell script, including fields like hostname, username, IP, etc.
+2. **Configure Network Security**
+   - Create a Network Security Group (NSG)
+   - Allow all inbound traffic to make the VM discoverable
 
-**Data Extraction:**
-Extract necessary fields from the logged data using Log Analytics Workspace capabilities.
-Save extracted data fields, such as IP addresses, usernames, and geographic locations, for subsequent analysis.
+3. **Set up Log Analytics Workspace**
+   - Ingest logs from the virtual machine
+   - Enable integration with Microsoft Defender for Cloud
 
-**Analysis and Response:**
-Analyze the collected data to identify patterns and trends in attempted cyberattacks.
-Utilize the insights gained to enhance security measures, such as updating firewall rules or implementing additional threat detection mechanisms
+4. **Configure Azure Sentinel**
+   - Add Sentinel to your Log Analytics Workspace
+   - Connect to the honeypot VM via RDP
+   - Disable Windows Defender on the VM
+
+5. **Collect Failed Login Logs**
+   - Use the Custom_Security_Log_Exporter.ps1 script
+   - Integrate with ipgeolocation.io for geolocation data
+
+6. **Ingest Custom Logs into Azure Sentinel**
+   - Create a custom log table in Log Analytics Workspace
+   - Configure appropriate collection paths and field details
+
+7. **Visualize and Analyze Cyber Attacks**
+   - Extract relevant fields from log entries
+   - Use Azure Sentinel's mapping capabilities
+   - Create custom dashboards and visualizations
+
+## Benefits
+
+- **Real-world Threat Intelligence**: Gain insights into current attack trends and techniques.
+- **Improved Incident Response**: Develop and test response strategies based on actual attack data.
+- **Enhanced Security Posture**: Use attack pattern analysis to strengthen defenses proactively.
+- **Geographical Attack Mapping**: Visualize the global distribution of attack sources.
+- **Custom Threat Detection**: Develop and refine detection rules based on observed attack behaviors.
+
+## Cautions
+
+- This project involves creating an intentionally vulnerable system. Ensure it's isolated from your production environment.
+- Follow all relevant legal and ethical guidelines when setting up and operating a honeypot.
+- Regularly monitor and maintain the honeypot to prevent it from being used as a launch point for attacks on other systems.
+
+## Further Reading
+
+- [Microsoft Azure Sentinel Documentation](https://docs.microsoft.com/en-us/azure/sentinel/)
+- [Honeypot Security: Pros and Cons](https://www.cloudflare.com/learning/security/glossary/honeypot-security/)
+- [SANS Institute: Building a Honeypot](https://www.sans.org/reading-room/whitepapers/detection/building-honeypot-169)
+
+## Contributing
+
+We welcome contributions to improve this project. Please submit pull requests or open issues on our GitHub repository.
+
+## License
+
+This project is licensed under CC BY 4.0. See the LICENSE file for details.
